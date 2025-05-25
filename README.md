@@ -1,3 +1,6 @@
+
+> **注意**: 現在の `practice` ブランチは、書籍「Five Lines of Code」の実践演習のためのブランチです。このブランチでは、書籍で学んだリファクタリング手法を実際に適用していきます。
+
 # five-lines
 
 In this kata your task is to refactor the code for a small game. When finished it should be easy to add new tile types, or make the key draw as a circle, so we can easily distinguish it from the lock. 
@@ -12,10 +15,27 @@ In the game, you are a red square and have to get the box (brown) to the lower r
 ![Screenshot of the game](game.png)
 
 # How to Build It
-Assuming that you have the Typescript compiler installed: Open a terminal in this directory, then run `tsc`. There should now be a `index.js` file in this directory.
+プロジェクトのビルドには以下の手順を実行してください：
+
+1. 必要な依存関係をインストールします：
+   ```
+   npm install
+   ```
+
+2. TypeScriptコードをコンパイルします：
+   ```
+   npm run build
+   ```
+
+ビルドが成功すると、`index.js`ファイルが生成されます。
 
 # How to Run It
-To run the game you need to first build it, see above. Then simply open `index.html` in a browser. Use the arrows to move the player.
+ゲームを実行するには、まず上記の手順でビルドを行ってください。その後、ブラウザで`index.html`ファイルを開くだけです。矢印キーを使用してプレイヤーを操作できます。
+
+開発中は以下のコマンドを使用すると、ファイルの変更を監視して自動的に再ビルドされます：
+```
+npm run watch
+```
 
 # Thank You!
 If you like this kata please consider giving the repo a star. You might also consider purchasing a copy of my book where I show a simple way to tackle code like this: [Five Lines of Code](https://www.manning.com/books/five-lines-of-code), available through the Manning Early Access Program.
