@@ -1,0 +1,13 @@
+{
+  "name": "five-lines",
+  "version": "1.0.0",
+  "description": "書籍「Five Lines of Code」の練習用プロジェクト",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  }
+}
