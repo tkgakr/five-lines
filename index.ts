@@ -200,7 +200,6 @@ function drawMap(g: CanvasRenderingContext2D) {
         g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     }
   }
-
 }
 
 function drawPlayer(g: CanvasRenderingContext2D) {
