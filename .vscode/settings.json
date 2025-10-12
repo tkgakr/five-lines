@@ -1,0 +1,17 @@
+{
+  "editor.formatOnSave": true,
+  "[typescript]": {
+    // VS Code標準のフォーマッターを使用する
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  // クォーテーションの統一（選択）
+  // "single" | "double"
+  "typescript.preferences.quoteStyle": "double",
+  // セミコロンの方針（選択）
+  // "insert" | "remove" | "ignore"
+  "typescript.format.semicolons": "insert",
+  // 末尾の空行や余分な空白を自動調整（ファイル末のみ）
+  "files.insertFinalNewline": true, // 最終行に改行を 1 行入れる
+  "files.trimFinalNewlines": true, // 余分な末尾空行は削る（結果 1 行に）
+  "files.trimTrailingWhitespace": true // 行末の空白を除去
+}
