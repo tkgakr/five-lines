@@ -105,7 +105,7 @@ class Stone implements Tile {
     this.falling = false;
   }
   isAir() { return false; }
-  isFallingStone() { return false; }
+  isFallingStone() { return this.falling; }
   isFallingBox() { return false; }
   isLock1() { return false; }
   isLock2() { return false; }
@@ -135,7 +135,7 @@ class FallingStone implements Tile {
     this.falling = true;
   }
   isAir() { return false; }
-  isFallingStone() { return true; }
+  isFallingStone() { return this.falling; }
   isFallingBox() { return false; }
   isLock1() { return false; }
   isLock2() { return false; }
