@@ -100,10 +100,7 @@ class Player implements Tile {
 }
 
 class Stone implements Tile {
-  private falling: boolean;
-  constructor(falling: boolean) {
-    this.falling = falling;
-  }
+  constructor(private falling: boolean) { }
   isAir() { return false; }
   isFallingStone() { return this.falling; }
   isFallingBox() { return false; }
