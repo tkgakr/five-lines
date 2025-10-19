@@ -142,10 +142,7 @@ class Stone implements Tile {
 }
 
 class Box implements Tile {
-  private falling: boolean;
-  constructor(falling: boolean) {
-    this.falling = falling;
-  };
+  constructor(private falling: boolean) { };
   isAir() { return false; }
   isFallingStone() { return false; }
   isFallingBox() { return this.falling; }
@@ -173,10 +170,7 @@ class Box implements Tile {
 }
 
 class FallingBox implements Tile {
-  private falling: boolean;
-  constructor(falling: boolean) {
-    this.falling = falling;
-  };
+  constructor(private falling: boolean) { };
   isAir() { return false; }
   isFallingStone() { return false; }
   isFallingBox() { return this.falling; }
