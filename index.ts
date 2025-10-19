@@ -143,8 +143,8 @@ class Stone implements Tile {
 
 class Box implements Tile {
   private falling: boolean;
-  constructor() {
-    this.falling = false;
+  constructor(falling: boolean) {
+    this.falling = falling;
   };
   isAir() { return false; }
   isFallingStone() { return false; }
@@ -333,7 +333,7 @@ function transformTile(tile: RawTile) {
     case RawTile.UNBREAKABLE: return new Unbreakable();
     case RawTile.STONE: return new Stone(new Resting);
     case RawTile.FALLING_STONE: return new Stone(new Falling);
-    case RawTile.BOX: return new Box();
+    case RawTile.BOX: return new Box(false);
     case RawTile.FALLING_BOX: return new FallingBox();
     case RawTile.FLUX: return new Flux();
     case RawTile.KEY1: return new Key1();
@@ -414,7 +414,7 @@ function updateTile(y: number, x: number) {
   } else if (map[y][x].isFallingStone()) {
     map[y][x] = new Stone(new Resting());
   } else if (map[y][x].isFallingBox()) {
-    map[y][x] = new Box();
+    map[y][x] = new Box(false);
   }
 }
 
