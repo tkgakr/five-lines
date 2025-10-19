@@ -114,10 +114,6 @@ class Resting implements FallingState {
   isResting() { return true; }
 }
 
-enum FallingState2 {
-  FALLING,
-  RESTING
-}
 class Stone implements Tile {
   constructor(private falling: FallingState) { }
   isAir() { return false; }
