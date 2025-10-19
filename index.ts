@@ -152,7 +152,7 @@ class Box implements Tile {
     g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
   moveHorizontal(dx: number) {
-    if (true) {
+    if (this.isFallingBox() === false) {
       if (map[playery][playerx + dx + dx].isAir()
         && !map[playery + 1][playerx + dx].isAir()) {
         map[playery][playerx + dx + dx] = this;
@@ -177,7 +177,7 @@ class FallingBox implements Tile {
     g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
   moveHorizontal(dx: number) {
-    if (true) {
+    if (this.isFallingBox() === true) {
     }
   }
   moveVertical(dy: number) {
