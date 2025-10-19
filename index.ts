@@ -142,9 +142,13 @@ class Stone implements Tile {
 }
 
 class Box implements Tile {
+  private falling: boolean;
+  constructor() {
+    this.falling = false;
+  };
   isAir() { return false; }
   isFallingStone() { return false; }
-  isFallingBox() { return false; }
+  isFallingBox() { return this.falling; }
   isLock1() { return false; }
   isLock2() { return false; }
   draw(g: CanvasRenderingContext2D, x: number, y: number) {
@@ -169,9 +173,13 @@ class Box implements Tile {
 }
 
 class FallingBox implements Tile {
+  private falling: boolean;
+  constructor() {
+    this.falling = true;
+  };
   isAir() { return false; }
   isFallingStone() { return false; }
-  isFallingBox() { return true; }
+  isFallingBox() { return this.falling; }
   isLock1() { return false; }
   isLock2() { return false; }
   draw(g: CanvasRenderingContext2D, x: number, y: number) {
