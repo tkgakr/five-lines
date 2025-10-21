@@ -396,11 +396,17 @@ function updateMap() {
 function updateTile(x: number, y: number) {
   if (map[y][x].isStony()
     && map[y + 1][x].isAir()) {
-    map[y + 1][x] = new Stone(new Falling());
+    // 石を落ちるように設定
+    map[y][x].drop();
+    // 石と空気を入れ替える
+    map[y + 1][x] = map[y][x];
     map[y][x] = new Air();
   } else if (map[y][x].isBoxy()
     && map[y + 1][x].isAir()) {
-    map[y + 1][x] = new Box(new Falling());
+    // 箱を落ちるように設定
+    map[y][x].drop();
+    // 箱と空気を入れ替える
+    map[y + 1][x] = map[y][x];
     map[y][x] = new Air();
   } else if (map[y][x].isFalling()) {
     map[y][x].rest();
