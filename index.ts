@@ -395,17 +395,12 @@ function updateMap() {
 
 function updateTile(x: number, y: number) {
   if (map[y][x].isStony()
+    && map[y + 1][x].isAir()
+    || map[y][x].isBoxy()
     && map[y + 1][x].isAir()) {
-    // 石を落ちるように設定
+    // 石、または箱を落ちるように設定
     map[y][x].drop();
-    // 石と空気を入れ替える
-    map[y + 1][x] = map[y][x];
-    map[y][x] = new Air();
-  } else if (map[y][x].isBoxy()
-    && map[y + 1][x].isAir()) {
-    // 箱を落ちるように設定
-    map[y][x].drop();
-    // 箱と空気を入れ替える
+    // 空気と入れ替える
     map[y + 1][x] = map[y][x];
     map[y][x] = new Air();
   } else if (map[y][x].isFalling()) {
