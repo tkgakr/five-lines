@@ -388,12 +388,12 @@ function handleInputs() {
 function updateMap() {
   for (let y = map.length - 1; y >= 0; y--) {
     for (let x = 0; x < map[y].length; x++) {
-      updateTile(y, x);
+      updateTile(x, y);
     }
   }
 }
 
-function updateTile(y: number, x: number) {
+function updateTile(x: number, y: number) {
   if (map[y][x].isStony()
     && map[y + 1][x].isAir()) {
     map[y + 1][x] = new Stone(new Falling());
