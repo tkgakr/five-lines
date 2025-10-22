@@ -394,9 +394,8 @@ function updateMap() {
 }
 
 function updateTile(x: number, y: number) {
-  if (map[y][x].isStony()
-    && map[y + 1][x].isAir()
-    || map[y][x].isBoxy()
+  if ((map[y][x].isStony()
+    || map[y][x].isBoxy())
     && map[y + 1][x].isAir()) {
     // 石、または箱を落ちるように設定
     map[y][x].drop();
