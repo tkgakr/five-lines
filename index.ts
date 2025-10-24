@@ -107,7 +107,10 @@ class Resting implements FallingState {
 }
 
 class Stone implements Tile {
-  constructor(private falling: FallingState) { }
+  private fallStrategy: FallStrategy;
+  constructor(private falling: FallingState) {
+    this.fallStrategy = new FallStrategy();
+  }
   isAir() { return false; }
   isLock1() { return false; }
   isLock2() { return false; }
@@ -132,7 +135,10 @@ class Stone implements Tile {
 }
 
 class Box implements Tile {
-  constructor(private falling: FallingState) { };
+  private fallStrategy: FallStrategy;
+  constructor(private falling: FallingState) {
+    this.fallStrategy = new FallStrategy();
+  }
   isAir() { return false; }
   isLock1() { return false; }
   isLock2() { return false; }
@@ -224,6 +230,9 @@ class Lock2 implements Tile {
   update(x: number, y: number) { }
 }
 
+class FallStrategy {
+
+}
 
 interface Input {
   handle(): void;
