@@ -307,16 +307,6 @@ function transformMap() {
 
 let inputs: Input[] = [];
 
-class RemoveLock1 implements RemoveStrategy {
-  check(tile: Tile) {
-    return tile.isLock1();
-  }
-}
-
-interface RemoveStrategy {
-  check(tile: Tile): boolean;
-}
-
 function remove(shouldRemove: RemoveStrategy) {
   for (let y = 0; y < map.length; y++) {
     for (let x = 0; x < map[y].length; x++) {
@@ -324,6 +314,16 @@ function remove(shouldRemove: RemoveStrategy) {
         map[y][x] = new Air();
       }
     }
+  }
+}
+
+interface RemoveStrategy {
+  check(tile: Tile): boolean;
+}
+
+class RemoveLock1 implements RemoveStrategy {
+  check(tile: Tile) {
+    return tile.isLock1();
   }
 }
 
