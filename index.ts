@@ -334,14 +334,7 @@ class RemoveLock2 implements RemoveStrategy {
 }
 
 function removeLock2() {
-  let shouldRemove = new RemoveLock2();
-  for (let y = 0; y < map.length; y++) {
-    for (let x = 0; x < map[y].length; x++) {
-      if (shouldRemove.check(map[y][x])) {
-        map[y][x] = new Air();
-      }
-    }
-  }
+  remove(new RemoveLock2());
 }
 
 function moveToTile(newx: number, newy: number) {
