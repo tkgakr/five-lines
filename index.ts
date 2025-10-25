@@ -193,11 +193,11 @@ class Key2 implements Tile {
     g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
   moveHorizontal(dx: number) {
-    removeLock2();
+    remove(new RemoveLock2());
     moveToTile(playerx + dx, playery);
   }
   moveVertical(dy: number) {
-    removeLock2();
+    remove(new RemoveLock2());
     moveToTile(playerx, playery + dy);
   }
   update(x: number, y: number) { }
@@ -331,10 +331,6 @@ class RemoveLock2 implements RemoveStrategy {
   check(tile: Tile) {
     return tile.isLock2();
   }
-}
-
-function removeLock2() {
-  remove(new RemoveLock2());
 }
 
 function moveToTile(newx: number, newy: number) {
