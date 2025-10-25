@@ -317,7 +317,7 @@ interface RemoveStrategy {
   check(tile: Tile): boolean;
 }
 
-function remove(shouldRemove: RemoveLock1) {
+function remove(shouldRemove: RemoveStrategy) {
   for (let y = 0; y < map.length; y++) {
     for (let x = 0; x < map[y].length; x++) {
       if (shouldRemove.check(map[y][x])) {
@@ -327,10 +327,17 @@ function remove(shouldRemove: RemoveLock1) {
   }
 }
 
+class RemoveLock2 implements RemoveStrategy {
+  check(tile: Tile) {
+    return tile.isLock2();
+  }
+}
+
 function removeLock2() {
+  let shouldRemove = new RemoveLock2();
   for (let y = 0; y < map.length; y++) {
     for (let x = 0; x < map[y].length; x++) {
-      if (map[y][x].isLock2()) {
+      if (shouldRemove.check(map[y][x])) {
         map[y][x] = new Air();
       }
     }
