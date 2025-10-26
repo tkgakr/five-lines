@@ -150,33 +150,32 @@ class Box implements Tile {
   }
 }
 
-class Key1 implements Tile {
+class Key implements Tile {
   constructor(
-    private col: string
+    private color: string
   ) { }
-  color() { return this.col; }
   isAir() { return false; }
   isLock1() { return false; }
   isLock2() { return false; }
   draw(g: CanvasRenderingContext2D, x: number, y: number) {
-    g.fillStyle = this.color();
+    g.fillStyle = this.color;
     g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
   moveHorizontal(dx: number) {
-    if (this.color() === "#ffcc00") {
+    if (this.color === "#ffcc00") {
       remove(new RemoveLock1());
       moveToTile(playerx + dx, playery);
-    } else if (this.color() === "#00ccff") {
+    } else if (this.color === "#00ccff") {
       remove(new RemoveLock2());
       moveToTile(playerx + dx, playery);
     }
   }
   moveVertical(dy: number) {
-    if (this.color() === "#ffcc00") {
+    if (this.color === "#ffcc00") {
       remove(new RemoveLock1());
       moveToTile(playerx, playery + dy);
 
-    } else if (this.color() === "#00ccff") {
+    } else if (this.color === "#00ccff") {
       remove(new RemoveLock2());
       moveToTile(playerx, playery + dy);
     }
@@ -195,40 +194,6 @@ class Lock1 implements Tile {
   moveHorizontal(dx: number) {
   }
   moveVertical(dy: number) {
-  }
-  update(x: number, y: number) { }
-}
-
-class Key2 implements Tile {
-  constructor(
-    private col: string
-  ) { }
-  color() { return this.col; }
-  isAir() { return false; }
-  isLock1() { return false; }
-  isLock2() { return false; }
-  draw(g: CanvasRenderingContext2D, x: number, y: number) {
-    g.fillStyle = "#00ccff";
-    g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-  }
-  moveHorizontal(dx: number) {
-    if (this.color() === "#ffcc00") {
-      remove(new RemoveLock1());
-      moveToTile(playerx + dx, playery);
-    } else if (this.color() === "#00ccff") {
-      remove(new RemoveLock2());
-      moveToTile(playerx + dx, playery);
-    }
-  }
-  moveVertical(dy: number) {
-    if (this.color() === "#ffcc00") {
-      remove(new RemoveLock1());
-      moveToTile(playerx, playery + dy);
-
-    } else if (this.color() === "#00ccff") {
-      remove(new RemoveLock2());
-      moveToTile(playerx, playery + dy);
-    }
   }
   update(x: number, y: number) { }
 }
@@ -318,9 +283,9 @@ function transformTile(tile: RawTile) {
     case RawTile.BOX: return new Box(new Resting());
     case RawTile.FALLING_BOX: return new Box(new Falling());
     case RawTile.FLUX: return new Flux();
-    case RawTile.KEY1: return new Key1("#ffcc00");
+    case RawTile.KEY1: return new Key("#ffcc00");
     case RawTile.LOCK1: return new Lock1();
-    case RawTile.KEY2: return new Key2("#00ccff");
+    case RawTile.KEY2: return new Key("#00ccff");
     case RawTile.LOCK2: return new Lock2();
     default: assertExhausted(tile);
   }
