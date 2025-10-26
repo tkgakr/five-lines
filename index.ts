@@ -152,7 +152,7 @@ class Box implements Tile {
 
 class Key1 implements Tile {
   constructor(
-    private col: string = "#ffcc00"
+    private col: string
   ) { }
   color() { return this.col; }
   isAir() { return false; }
@@ -201,7 +201,7 @@ class Lock1 implements Tile {
 
 class Key2 implements Tile {
   constructor(
-    private col: string = "#00ccff"
+    private col: string
   ) { }
   color() { return this.col; }
   isAir() { return false; }
@@ -318,9 +318,9 @@ function transformTile(tile: RawTile) {
     case RawTile.BOX: return new Box(new Resting());
     case RawTile.FALLING_BOX: return new Box(new Falling());
     case RawTile.FLUX: return new Flux();
-    case RawTile.KEY1: return new Key1();
+    case RawTile.KEY1: return new Key1("#ffcc00");
     case RawTile.LOCK1: return new Lock1();
-    case RawTile.KEY2: return new Key2();
+    case RawTile.KEY2: return new Key2("#00ccff");
     case RawTile.LOCK2: return new Lock2();
     default: assertExhausted(tile);
   }
