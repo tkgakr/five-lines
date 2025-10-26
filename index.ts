@@ -174,11 +174,16 @@ class Key implements Tile {
 }
 
 class Lock1 implements Tile {
+  constructor(
+    private color: string = "#ffcc00",
+    private lock1: boolean = true,
+    private lock2: boolean = false,
+  ) { }
   isAir() { return false; }
-  isLock1() { return true; }
-  isLock2() { return false; }
+  isLock1() { return this.lock1; }
+  isLock2() { return this.lock2; }
   draw(g: CanvasRenderingContext2D, x: number, y: number) {
-    g.fillStyle = "#ffcc00";
+    g.fillStyle = this.color;
     g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
   moveHorizontal(dx: number) {
@@ -189,11 +194,16 @@ class Lock1 implements Tile {
 }
 
 class Lock2 implements Tile {
+  constructor(
+    private color: string = "#00ccff",
+    private lock1: boolean = false,
+    private lock2: boolean = true,
+  ) { }
   isAir() { return false; }
-  isLock1() { return false; }
-  isLock2() { return true; }
+  isLock1() { return this.lock1; }
+  isLock2() { return this.lock2; }
   draw(g: CanvasRenderingContext2D, x: number, y: number) {
-    g.fillStyle = "#00ccff";
+    g.fillStyle = this.color;
     g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
   moveHorizontal(dx: number) {
