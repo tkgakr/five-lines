@@ -151,7 +151,10 @@ class Box implements Tile {
 }
 
 class Key1 implements Tile {
-  color() { return "#ffcc00"; }
+  constructor(
+    private col: string = "#ffcc00"
+  ) { }
+  color() { return this.col; }
   isAir() { return false; }
   isLock1() { return false; }
   isLock2() { return false; }
@@ -197,7 +200,10 @@ class Lock1 implements Tile {
 }
 
 class Key2 implements Tile {
-  color() { return "#00ccff"; }
+  constructor(
+    private col: string = "#00ccff"
+  ) { }
+  color() { return this.col; }
   isAir() { return false; }
   isLock1() { return false; }
   isLock2() { return false; }
