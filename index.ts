@@ -152,7 +152,8 @@ class Box implements Tile {
 
 class Key implements Tile {
   constructor(
-    private color: string
+    private color: string,
+    private removeStrategy: RemoveStrategy
   ) { }
   isAir() { return false; }
   isLock1() { return false; }
@@ -162,23 +163,12 @@ class Key implements Tile {
     g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
   moveHorizontal(dx: number) {
-    if (this.color === "#ffcc00") {
-      remove(new RemoveLock1());
-      moveToTile(playerx + dx, playery);
-    } else if (this.color === "#00ccff") {
-      remove(new RemoveLock2());
-      moveToTile(playerx + dx, playery);
-    }
+    remove(this.removeStrategy);
+    moveToTile(playerx + dx, playery);
   }
   moveVertical(dy: number) {
-    if (this.color === "#ffcc00") {
-      remove(new RemoveLock1());
-      moveToTile(playerx, playery + dy);
-
-    } else if (this.color === "#00ccff") {
-      remove(new RemoveLock2());
-      moveToTile(playerx, playery + dy);
-    }
+    remove(this.removeStrategy);
+    moveToTile(playerx, playery + dy);
   }
   update(x: number, y: number) { }
 }
@@ -283,9 +273,9 @@ function transformTile(tile: RawTile) {
     case RawTile.BOX: return new Box(new Resting());
     case RawTile.FALLING_BOX: return new Box(new Falling());
     case RawTile.FLUX: return new Flux();
-    case RawTile.KEY1: return new Key("#ffcc00");
+    case RawTile.KEY1: return new Key("#ffcc00", new RemoveLock1());
     case RawTile.LOCK1: return new Lock1();
-    case RawTile.KEY2: return new Key("#00ccff");
+    case RawTile.KEY2: return new Key("#00ccff", new RemoveLock2());
     case RawTile.LOCK2: return new Lock2();
     default: assertExhausted(tile);
   }
