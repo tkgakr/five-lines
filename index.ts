@@ -160,13 +160,13 @@ class Key1 implements Tile {
     g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
   moveHorizontal(dx: number) {
-    if (true) {
+    if (this.color() === "#ffcc00") {
       remove(new RemoveLock1());
       moveToTile(playerx + dx, playery);
     }
   }
   moveVertical(dy: number) {
-    if (true) {
+    if (this.color() === "#ffcc00") {
       remove(new RemoveLock1());
       moveToTile(playerx, playery + dy);
 
@@ -191,7 +191,7 @@ class Lock1 implements Tile {
 }
 
 class Key2 implements Tile {
-  color() { return "00ccff"; }
+  color() { return "#00ccff"; }
   isAir() { return false; }
   isLock1() { return false; }
   isLock2() { return false; }
@@ -200,13 +200,13 @@ class Key2 implements Tile {
     g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
   moveHorizontal(dx: number) {
-    if (true) {
+    if (this.color() === "#00ccff") {
       remove(new RemoveLock2());
       moveToTile(playerx + dx, playery);
     }
   }
   moveVertical(dy: number) {
-    if (true) {
+    if (this.color() === "#00ccff") {
       remove(new RemoveLock2());
       moveToTile(playerx, playery + dy);
     }
