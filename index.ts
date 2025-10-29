@@ -32,10 +32,10 @@ class Air implements Tile {
   draw(g: CanvasRenderingContext2D, x: number, y: number) {
   }
   moveHorizontal(player: Player, dx: number) {
-    moveToTile(player, player.getX() + dx, player.getY());
+    player.moveToTile(player.getX() + dx, player.getY());
   }
   moveVertical(player: Player, dy: number) {
-    moveToTile(player, player.getX(), player.getY() + dy);
+    player.moveToTile(player.getX(), player.getY() + dy);
   }
   update(x: number, y: number) { }
   getBlockOnTopState() {
@@ -52,10 +52,10 @@ class Flux implements Tile {
     g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
   moveHorizontal(player: Player, dx: number) {
-    moveToTile(player, player.getX() + dx, player.getY());
+    player.moveToTile(player.getX() + dx, player.getY());
   }
   moveVertical(player: Player, dy: number) {
-    moveToTile(player, player.getX(), player.getY() + dy);
+    player.moveToTile(player.getX(), player.getY() + dy);
   }
   update(x: number, y: number) { }
   getBlockOnTopState() {
@@ -119,7 +119,8 @@ class Resting implements FallingState {
     if (map[player.getY()][player.getX() + dx + dx].isAir()
       && !map[player.getY() + 1][player.getX() + dx].isAir()) {
       map[player.getY()][player.getX() + dx + dx] = tile;
-      moveToTile(player, player.getX() + dx, player.getY());
+      player.moveToTile(player.getX() + dx, player.getY());
+
     }
   }
   drop(tile: Tile, x: number, y: number) { }
@@ -188,11 +189,11 @@ class Key implements Tile {
   }
   moveHorizontal(player: Player, dx: number) {
     this.keyConf.removeLock();
-    moveToTile(player, player.getX() + dx, player.getY());
+    player.moveToTile(player.getX() + dx, player.getY());
   }
   moveVertical(player: Player, dy: number) {
     this.keyConf.removeLock();
-    moveToTile(player, player.getX(), player.getY() + dy);
+    player.moveToTile(player.getX(), player.getY() + dy);
   }
   update(x: number, y: number) { }
   getBlockOnTopState() {
@@ -273,6 +274,12 @@ class Player {
   draw(g: CanvasRenderingContext2D) {
     g.fillStyle = "#ff0000";
     g.fillRect(this.x * TILE_SIZE, this.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+  }
+  moveToTile(newx: number, newy: number) {
+    map[this.y][this.x] = new Air();
+    map[newy][newx] = new PlayerTile();
+    this.x = newx;
+    this.y = newy;
   }
 }
 let player = new Player();
@@ -369,13 +376,6 @@ const BLUE_KEY = new KeyConfiguration(
   false,
   new RemoveLock2()
 );
-
-function moveToTile(player: Player, newx: number, newy: number) {
-  map[player.getY()][player.getX()] = new Air();
-  map[newy][newx] = new PlayerTile();
-  player.setX(newx);
-  player.setY(newy);
-}
 
 function update(player: Player) {
   handleInputs(player);
