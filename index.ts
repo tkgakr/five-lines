@@ -32,10 +32,10 @@ class Air implements Tile {
   draw(g: CanvasRenderingContext2D, x: number, y: number) {
   }
   moveHorizontal(player: Player, dx: number) {
-    player.moveHorizontal(dx);
+    player.moveHorizontal(dx, 0);
   }
   moveVertical(player: Player, dy: number) {
-    player.moveVertical(dy);
+    player.moveVertical(0, dy);
   }
   update(x: number, y: number) { }
   getBlockOnTopState() {
@@ -52,10 +52,10 @@ class Flux implements Tile {
     g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
   moveHorizontal(player: Player, dx: number) {
-    player.moveHorizontal(dx);
+    player.moveHorizontal(dx, 0);
   }
   moveVertical(player: Player, dy: number) {
-    player.moveVertical(dy);
+    player.moveVertical(0, dy);
   }
   update(x: number, y: number) { }
   getBlockOnTopState() {
@@ -184,11 +184,11 @@ class Key implements Tile {
   }
   moveHorizontal(player: Player, dx: number) {
     this.keyConf.removeLock();
-    player.moveHorizontal(dx);
+    player.moveHorizontal(dx, 0);
   }
   moveVertical(player: Player, dy: number) {
     this.keyConf.removeLock();
-    player.moveVertical(dy);
+    player.moveVertical(0, dy);
   }
   update(x: number, y: number) { }
   getBlockOnTopState() {
@@ -279,11 +279,11 @@ class Player {
     map[this.y + 1][this.x].moveVertical(this, 1);
   }
 
-  moveHorizontal(dx: number) {
-    this.moveToTile(this.x + dx, this.y);
+  moveHorizontal(dx: number, dy: number) {
+    this.moveToTile(this.x + dx, this.y + dy);
   }
-  moveVertical(dy: number) {
-    this.moveToTile(this.x, this.y + dy);
+  moveVertical(dx: number, dy: number) {
+    this.moveToTile(this.x + dx, this.y + dy);
   }
   pushHorizontal(tile: Tile, dx: number) {
     if (map[this.y][this.x + dx + dx].isAir()
