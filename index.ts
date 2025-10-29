@@ -32,10 +32,10 @@ class Air implements Tile {
   draw(g: CanvasRenderingContext2D, x: number, y: number) {
   }
   moveHorizontal(player: Player, dx: number) {
-    player.moveToTile(player.getX() + dx, player.getY());
+    player.moveHorizontal(dx);
   }
   moveVertical(player: Player, dy: number) {
-    player.moveToTile(player.getX(), player.getY() + dy);
+    player.moveVertical(dy);
   }
   update(x: number, y: number) { }
   getBlockOnTopState() {
@@ -52,10 +52,10 @@ class Flux implements Tile {
     g.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
   moveHorizontal(player: Player, dx: number) {
-    player.moveToTile(player.getX() + dx, player.getY());
+    player.moveHorizontal(dx);
   }
   moveVertical(player: Player, dy: number) {
-    player.moveToTile(player.getX(), player.getY() + dy);
+    player.moveVertical(dy);
   }
   update(x: number, y: number) { }
   getBlockOnTopState() {
@@ -116,12 +116,7 @@ class Falling implements FallingState {
 class Resting implements FallingState {
   isFalling() { return false; }
   moveHorizontal(player: Player, tile: Tile, dx: number) {
-    if (map[player.getY()][player.getX() + dx + dx].isAir()
-      && !map[player.getY() + 1][player.getX() + dx].isAir()) {
-      map[player.getY()][player.getX() + dx + dx] = tile;
-      player.moveToTile(player.getX() + dx, player.getY());
-
-    }
+    player.pushHorizontal(tile, dx);
   }
   drop(tile: Tile, x: number, y: number) { }
 }
@@ -189,11 +184,11 @@ class Key implements Tile {
   }
   moveHorizontal(player: Player, dx: number) {
     this.keyConf.removeLock();
-    player.moveToTile(player.getX() + dx, player.getY());
+    player.moveHorizontal(dx);
   }
   moveVertical(player: Player, dy: number) {
     this.keyConf.removeLock();
-    player.moveToTile(player.getX(), player.getY() + dy);
+    player.moveVertical(dy);
   }
   update(x: number, y: number) { }
   getBlockOnTopState() {
@@ -242,38 +237,60 @@ interface Input {
 
 class Right implements Input {
   handle(player: Player) {
-    map[player.getY()][player.getX() + 1].moveHorizontal(player, 1);
+    player.handleRight();
   }
 }
 
 class Left implements Input {
   handle(player: Player) {
-    map[player.getY()][player.getX() - 1].moveHorizontal(player, -1);
+    player.handleLeft();
   }
 }
 
 class Up implements Input {
   handle(player: Player) {
-    map[player.getY() - 1][player.getX()].moveVertical(player, -1);
+    player.handleUp();
   }
 }
 
 class Down implements Input {
   handle(player: Player) {
-    map[player.getY() + 1][player.getX()].moveVertical(player, 1);
+    player.handleDown();
   }
 }
 
 class Player {
   private x = 1;
   private y = 1;
-  getX() { return this.x; }
-  getY() { return this.y; }
-  setX(x: number) { this.x = x; }
-  setY(y: number) { this.y = y; }
   draw(g: CanvasRenderingContext2D) {
     g.fillStyle = "#ff0000";
     g.fillRect(this.x * TILE_SIZE, this.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+  }
+  handleRight() {
+    map[this.y][this.x + 1].moveHorizontal(this, 1);
+  }
+  handleLeft() {
+    map[this.y][this.x - 1].moveHorizontal(this, -1);
+  }
+  handleUp() {
+    map[this.y - 1][this.x].moveVertical(this, -1);
+  }
+  handleDown() {
+    map[this.y + 1][this.x].moveVertical(this, 1);
+  }
+
+  moveHorizontal(dx: number) {
+    this.moveToTile(this.x + dx, this.y);
+  }
+  moveVertical(dy: number) {
+    this.moveToTile(this.x, this.y + dy);
+  }
+  pushHorizontal(tile: Tile, dx: number) {
+    if (map[this.y][this.x + dx + dx].isAir()
+      && !map[this.y + 1][this.x + dx].isAir()) {
+      map[this.y][this.x + dx + dx] = tile;
+      this.moveToTile(this.x + dx, this.y);
+    }
   }
   moveToTile(newx: number, newy: number) {
     map[this.y][this.x] = new Air();
