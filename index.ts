@@ -249,13 +249,13 @@ class Left implements Input {
 
 class Up implements Input {
   handle(player: Player) {
-    player.handleUp();
+    player.moveVertical(-1);
   }
 }
 
 class Down implements Input {
   handle(player: Player) {
-    player.handleDown();
+    player.moveVertical(1);
   }
 }
 
@@ -269,11 +269,8 @@ class Player {
   moveHorizontal(dx: number) {
     map[this.y][this.x + dx].moveHorizontal(this, dx);
   }
-  handleUp() {
-    map[this.y - 1][this.x].moveVertical(this, -1);
-  }
-  handleDown() {
-    map[this.y + 1][this.x].moveVertical(this, 1);
+  moveVertical(dy: number) {
+    map[this.y + dy][this.x].moveVertical(this, dy);
   }
 
   move(dx: number, dy: number) {
