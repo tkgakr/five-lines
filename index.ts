@@ -237,13 +237,13 @@ interface Input {
 
 class Right implements Input {
   handle(player: Player) {
-    player.handleRight();
+    player.moveHorizontal(1);
   }
 }
 
 class Left implements Input {
   handle(player: Player) {
-    player.handleLeft();
+    player.moveHorizontal(-1);
   }
 }
 
@@ -266,11 +266,8 @@ class Player {
     g.fillStyle = "#ff0000";
     g.fillRect(this.x * TILE_SIZE, this.y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
   }
-  handleRight() {
-    map[this.y][this.x + 1].moveHorizontal(this, 1);
-  }
-  handleLeft() {
-    map[this.y][this.x - 1].moveHorizontal(this, -1);
+  moveHorizontal(dx: number) {
+    map[this.y][this.x + dx].moveHorizontal(this, dx);
   }
   handleUp() {
     map[this.y - 1][this.x].moveVertical(this, -1);
