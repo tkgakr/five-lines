@@ -403,7 +403,7 @@ const BLUE_KEY = new KeyConfiguration(
 
 function update(map: Map, player: Player) {
   handleInputs(map, player);
-  updateMap(map);
+  map.update();
 }
 
 function handleInputs(map: Map, player: Player) {
@@ -411,10 +411,6 @@ function handleInputs(map: Map, player: Player) {
     let input = inputs.pop();
     input.handle(map, player);
   }
-}
-
-function updateMap(map: Map) {
-  map.update();
 }
 
 function createGraphics() {
