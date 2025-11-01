@@ -285,7 +285,7 @@ class Player {
       this.moveToTile(map, this.x + dx, this.y);
     }
   }
-  private moveToTile(map: Map, newx: number, newy: number) {
+  moveToTile(map: Map, newx: number, newy: number) {
     map.movePlayer(this.x, this.y, newx, newy);
     this.x = newx;
     this.y = newy;
@@ -358,6 +358,13 @@ class Map {
           this.map[y][x] = new Air();
         }
       }
+    }
+  }
+  pushHorizontal(this: Map, player: Player, tile: Tile, x: number, y: number, dx: number) {
+    if (this.isAir(x + dx + dx, y)
+      && !this.isAir(x + dx, y + 1)) {
+      this.setTile(x + dx + dx, y, tile);
+      player.moveToTile(this, x + dx, y);
     }
   }
 
