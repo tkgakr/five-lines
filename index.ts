@@ -387,10 +387,6 @@ function transformTile(tile: RawTile) {
 
 let inputs: Input[] = [];
 
-function remove(map: Map, shouldRemove: RemoveStrategy) {
-  map.remove(shouldRemove);
-}
-
 interface RemoveStrategy {
   check(tile: Tile): boolean;
 }
@@ -418,7 +414,7 @@ class KeyConfiguration {
   }
   is1() { return this._1; }
   removeLock(map: Map) {
-    remove(map, this.removeStrategy);
+    map.remove(this.removeStrategy);
   }
 }
 
