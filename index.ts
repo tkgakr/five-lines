@@ -324,9 +324,6 @@ class Map {
     }
   }
 
-  isAir(x: number, y: number): boolean {
-    return this.map[y][x].isAir();
-  }
   drop(tile: Tile, x: number, y: number) {
     this.map[y + 1][x] = tile;
     this.map[y][x] = new Air();
