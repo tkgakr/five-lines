@@ -3,19 +3,69 @@ const TILE_SIZE = 30;
 const FPS = 30;
 const SLEEP = 1000 / FPS;
 
-interface RawTileValue { }
-class AirValue implements RawTileValue { }
-class FluxValue implements RawTileValue { }
-class UnbreakableValue implements RawTileValue { }
-class PlayerValue implements RawTileValue { }
-class StoneValue implements RawTileValue { }
-class FallingStoneValue implements RawTileValue { }
-class BoxValue implements RawTileValue { }
-class FallingBoxValue implements RawTileValue { }
-class Key1Value implements RawTileValue { }
-class Lock1Value implements RawTileValue { }
-class Key2Value implements RawTileValue { }
-class Lock2Value implements RawTileValue { }
+interface RawTileValue {
+  transform(): Tile;
+}
+class AirValue implements RawTileValue {
+  transform(): Tile {
+    return new Air();
+  }
+}
+class FluxValue implements RawTileValue {
+  transform(): Tile {
+    return new Flux();
+  }
+}
+class UnbreakableValue implements RawTileValue {
+  transform(): Tile {
+    return new Unbreakable();
+  }
+}
+class PlayerValue implements RawTileValue {
+  transform(): Tile {
+    return new PlayerTile();
+  }
+}
+class StoneValue implements RawTileValue {
+  transform(): Tile {
+    return new Stone(new Resting());
+  }
+}
+class FallingStoneValue implements RawTileValue {
+  transform(): Tile {
+    return new Stone(new Falling());
+  }
+}
+class BoxValue implements RawTileValue {
+  transform(): Tile {
+    return new Box(new Resting());
+  }
+}
+class FallingBoxValue implements RawTileValue {
+  transform(): Tile {
+    return new Box(new Falling());
+  }
+}
+class Key1Value implements RawTileValue {
+  transform(): Tile {
+    return new Key(YELLOW_KEY);
+  }
+}
+class Lock1Value implements RawTileValue {
+  transform(): Tile {
+    return new LockTile(YELLOW_KEY);
+  }
+}
+class Key2Value implements RawTileValue {
+  transform(): Tile {
+    return new Key(BLUE_KEY);
+  }
+}
+class Lock2Value implements RawTileValue {
+  transform(): Tile {
+    return new LockTile(BLUE_KEY);
+  }
+}
 class RawTile2 {
   static readonly AIR = new RawTile2(new AirValue());
   static readonly FLUX = new RawTile2(new FluxValue());
@@ -30,6 +80,9 @@ class RawTile2 {
   static readonly KEY2 = new RawTile2(new Key2Value());
   static readonly LOCK2 = new RawTile2(new Lock2Value());
   private constructor(private value: RawTileValue) { }
+  transform() {
+    return this.value.transform();
+  }
 }
 
 const RAW_TILES = [
@@ -46,17 +99,6 @@ const RAW_TILES = [
   RawTile2.KEY2,
   RawTile2.LOCK2
 ];
-
-enum RawTile {
-  AIR,
-  FLUX,
-  UNBREAKABLE,
-  PLAYER,
-  STONE, FALLING_STONE,
-  BOX, FALLING_BOX,
-  KEY1, LOCK1,
-  KEY2, LOCK2
-}
 
 interface Tile {
   isAir(): boolean;
@@ -333,7 +375,8 @@ class Player {
 }
 let player = new Player();
 
-let rawMap: RawTile[][] = [
+// 各値はRAW_TILESの要素番号
+let rawMap: number[][] = [
   [2, 2, 2, 2, 2, 2, 2, 2],
   [2, 3, 0, 1, 10, 2, 0, 2],
   [2, 4, 2, 6, 1, 2, 0, 2],
@@ -349,7 +392,7 @@ class Map {
     for (let y = 0; y < rawMap.length; y++) {
       this.map[y] = new Array(rawMap[y].length);
       for (let x = 0; x < rawMap[y].length; x++) {
-        this.map[y][x] = transformTile(rawMap[y][x]);
+        this.map[y][x] = transformTile(RAW_TILES[rawMap[y][x]]);
       }
     }
   }
@@ -406,22 +449,8 @@ class Map {
 function assertExhausted(x: never): never {
   throw new Error("Unexpected object: " + x);
 }
-function transformTile(tile: RawTile) {
-  switch (tile) {
-    case RawTile.AIR: return new Air();
-    case RawTile.PLAYER: return new PlayerTile();
-    case RawTile.UNBREAKABLE: return new Unbreakable();
-    case RawTile.STONE: return new Stone(new Resting());
-    case RawTile.FALLING_STONE: return new Stone(new Falling());
-    case RawTile.BOX: return new Box(new Resting());
-    case RawTile.FALLING_BOX: return new Box(new Falling());
-    case RawTile.FLUX: return new Flux();
-    case RawTile.KEY1: return new Key(YELLOW_KEY);
-    case RawTile.LOCK1: return new LockTile(YELLOW_KEY);
-    case RawTile.KEY2: return new Key(BLUE_KEY);
-    case RawTile.LOCK2: return new LockTile(BLUE_KEY);
-    default: assertExhausted(tile);
-  }
+function transformTile(tile: RawTile2) {
+  return tile.transform();
 }
 
 let inputs: Input[] = [];
